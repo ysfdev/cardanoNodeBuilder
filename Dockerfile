@@ -5,7 +5,7 @@ FROM ubuntu:20.04 AS cardano-builder
 ENV CABAL_VERSION="3.2" \
     GHC_VERSION="8.6.5" \
     CARDANO_NODE_VERSION="1.14.0" \
-    CARDANO_NODE_GIT_TAG="1.14.0" \
+    CARDANO_NODE_GIT_TAG="1.14.1" \
     PATH="/opt/ghc/bin:/opt/cabal/bin:${PATH}"
 
 # Install the packages needed to compile cardano node software
