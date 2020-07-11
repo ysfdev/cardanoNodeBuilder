@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   builder:
-    image: cardano-builder:1.14.2
+    image: cardano-builder:1.15.1
     build:
       context: .
       target: cardano-builder
