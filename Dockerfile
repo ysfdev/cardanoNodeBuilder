@@ -4,8 +4,8 @@ FROM ubuntu:20.04 AS cardano-builder
 # Change the Cardano Node version and git tag, and Cabal and GHC versions, here
 ENV CABAL_VERSION="3.2" \
     GHC_VERSION="8.6.5" \
-    CARDANO_NODE_VERSION="1.15.1" \
-    CARDANO_NODE_GIT_TAG="1.15.1" \
+    CARDANO_NODE_VERSION="1.17.0" \
+    CARDANO_NODE_GIT_TAG="1.17.0" \
     PATH="/opt/ghc/bin:/opt/cabal/bin:${PATH}"
 
 # Install the packages needed to compile cardano node software
@@ -24,14 +24,10 @@ WORKDIR /usr/local/src/
 RUN git clone --recurse-submodules https://github.com/input-output-hk/cardano-node
 # git fetch and tag checkout
 WORKDIR /usr/local/src/cardano-node/
-RUN echo "package cardano-crypto-praos" >> cabal.project.local
-RUN echo "flags: -external-libsodium-vrf" >> cabal.project.local
 RUN git fetch --tags && \
     git checkout tags/${CARDANO_NODE_GIT_TAG} && \
-    # Build/Install
-    # This doesn't work yet
-    # RUN cabal install cardano-node cardano-cli
-    # So we use these instead
+    echo "package cardano-crypto-praos" >> cabal.project.local && \
+    echo "flags: -external-libsodium-vrf" >> cabal.project.local && \
     cabal build all
 
 WORKDIR /usr/local/src/cardano-node/dist-newstyle/build/x86_64-linux/ghc-${GHC_VERSION}/
